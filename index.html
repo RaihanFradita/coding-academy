@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAIHAN Coding Academy — Artificial Intelligence</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ====================================================
+     HEADER
+     ==================================================== -->
+<header class="site-header">
+  <div class="header-inner">
+
+    <!-- Brand -->
+    <a href="javascript:void(0)" onclick="switchView('gallery')" class="brand-link" style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <div class="brand-mark">R/</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="brand-name">RAIHAN Coding Academy</span>
+          <span class="ai-badge">AI</span>
+        </div>
+        <div class="brand-sub">Artificial Intelligence Division</div>
+      </div>
+    </a>
+
+    <!-- Tab Navigation (2 Tampilan) -->
+    <nav class="nav-tabs">
+      <button id="tab-gallery" onclick="switchView('gallery')" class="nav-tab active">
+        <i data-lucide="layout-grid" style="width:15px;height:15px;"></i>
+        <span>Gallery Pelatihan</span>
+      </button>
+      <button id="tab-register" onclick="switchView('register')" class="nav-tab">
+        <i data-lucide="file-pen" style="width:15px;height:15px;"></i>
+        <span>Form Pendaftaran</span>
+      </button>
+    </nav>
+
+    <!-- Status -->
+    <div class="batch-pill">
+      <span class="status-dot"></span>
+      <span>Batch AI 2026 Dibuka</span>
+    </div>
+
+  </div>
+</header>
+
+<!-- ====================================================
+     MAIN
+     ==================================================== -->
+<main class="page-wrap">
+
+  <!-- ============================================
+       TAMPILAN 1 — GALLERY PELATIHAN AI
+       ============================================ -->
+  <section id="view-gallery" class="view-pane active animate-in">
+
+    <!-- Header -->
+    <div style="max-width:620px;margin-bottom:44px;">
+      <div class="section-tag ai-tag">
+        <i data-lucide="brain-circuit" style="width:12px;height:12px;"></i>
+        Dokumentasi Lab AI
+      </div>
+      <h1 class="page-title">Belajar membangun kecerdasan buatan dari dasar hingga produksi.</h1>
+      <p class="page-desc">
+        Dokumentasi program intensif RAIHAN AI Division — mulai dari pengenalan machine learning, praktik neural network, proyek computer vision, hingga deployment model ke lingkungan nyata.
+      </p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button onclick="filterGallery('all')" class="cat-pill active" data-category="all">Semua Kegiatan</button>
+      <button onclick="filterGallery('ml')" class="cat-pill" data-category="ml">Machine Learning Lab</button>
+      <button onclick="filterGallery('nlp')" class="cat-pill" data-category="nlp">NLP & LLM Workshop</button>
+      <button onclick="filterGallery('vision')" class="cat-pill" data-category="vision">Computer Vision</button>
+      <button onclick="filterGallery('project')" class="cat-pill" data-category="project">AI Project Showcase</button>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div id="gallery-container" class="gallery-grid"></div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+      <div>
+        <h3 class="cta-title">Mulai perjalanan belajar AI Anda bersama RAIHAN Academy.</h3>
+        <p class="cta-sub">Program terbuka untuk pemula hingga tingkat menengah. Kurikulum terstruktur, mentor berpengalaman industri.</p>
+      </div>
+      <button onclick="switchView('register')" class="btn btn-primary">
+        Daftar Sekarang
+        <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ============================================
+       TAMPILAN 2 — FORM PENDAFTARAN
+       ============================================ -->
+  <section id="view-register" class="view-pane hidden">
+
+    <!-- Header -->
+    <div style="max-width:600px;margin-bottom:44px;">
+      <div class="section-tag ai-tag">
+        <i data-lucide="user-plus" style="width:12px;height:12px;"></i>
+        Pendaftaran Siswa Baru
+      </div>
+      <h1 class="page-title">Formulir Registrasi<br>Calon Siswa AI</h1>
+      <p class="page-desc">
+        Isi data diri Anda secara lengkap dan akurat. Informasi ini digunakan untuk verifikasi administrasi dan penempatan program AI sesuai level Anda.
+      </p>
+    </div>
+
+    <!-- Form Layout -->
+    <div class="form-layout" style="display:grid;grid-template-columns:1fr 320px;gap:36px;align-items:start;">
+
+      <!-- Form Card -->
+      <div class="form-card">
+        <form id="formPendaftaran" onsubmit="handleRegistrationSubmit(event)" novalidate>
+          <div style="display:flex;flex-direction:column;gap:26px;">
+
+            <!-- NIK -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Nomor Induk Kependudukan (NIK)<span class="label-req">*</span></span>
+                <span id="nik-counter" class="label-hint">0 / 16</span>
+              </label>
+              <input type="text" id="nik" name="nik" maxlength="16"
+                placeholder="Contoh: 3271012345678901"
+                class="field-input mono"
+                oninput="handleNikInput(this)" required>
+              <p class="field-hint">16 digit angka sesuai KTP atau Kartu Keluarga.</p>
+              <p id="error-nik" class="field-error">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                NIK wajib berupa 16 digit angka.
+              </p>
+            </div>
+
+            <!-- Nama Lengkap -->
+            <div class="form-group">
+              <label class="form-label">
+                Nama Lengkap<span class="label-req">*</span>
+              </label>
+              <input type="text" id="nama" name="nama"
+                placeholder="Masukkan nama lengkap sesuai identitas"
+                class="field-input" required>
+              <p id="error-nama" class="field-error">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                Nama lengkap wajib diisi.
+              </p>
+            </div>
+
+            <!-- Jenis Kelamin -->
+            <div class="form-group">
+              <label class="form-label">Jenis Kelamin<span class="label-req">*</span></label>
+              <div class="radio-grid">
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="Laki-laki" onchange="clearFieldError('error-gender')">
+                  <span class="radio-label">Laki-laki</span>
+                </label>
+                <label class="radio-card">
+                  <input type="radio" name="gender" value="Perempuan" onchange="clearFieldError('error-gender')">
+                  <span class="radio-label">Perempuan</span>
+                </label>
+              </div>
+              <p id="error-gender" class="field-error">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                Silakan pilih jenis kelamin.
+              </p>
+            </div>
+
+            <!-- No HP -->
+            <div class="form-group">
+              <label class="form-label">No. Handphone / WhatsApp<span class="label-req">*</span></label>
+              <div class="phone-wrap">
+                <span class="phone-prefix">+62</span>
+                <input type="tel" id="no_hp" name="no_hp"
+                  placeholder="81234567890"
+                  class="field-input mono"
+                  oninput="handlePhoneInput(this)" required>
+              </div>
+              <p id="error-nohp" class="field-error">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                Nomor HP wajib diisi, minimal 9 digit.
+              </p>
+            </div>
+
+            <!-- Alamat -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Alamat Domisili Lengkap<span class="label-req">*</span></span>
+                <span id="alamat-counter" class="label-hint">0 / 250</span>
+              </label>
+              <textarea id="alamat" name="alamat" rows="3" maxlength="250"
+                placeholder="Jalan, No. Rumah, RT/RW, Kelurahan, Kecamatan, Kota/Kabupaten…"
+                class="field-input" style="resize:none;"
+                oninput="handleAlamatInput(this)" required></textarea>
+              <p id="error-alamat" class="field-error">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                Alamat domisili wajib diisi.
+              </p>
+            </div>
+
+            <!-- Bahasa Pemrograman AI/ML -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Bahasa Pemrograman yang Diminati<span class="label-req">*</span></span>
+                <span class="label-hint">Pilih satu atau lebih</span>
+              </label>
+
+              <div class="lang-grid">
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">Python</span>
+                    <input type="checkbox" name="languages" value="Python" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">AI & ML Core</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">R</span>
+                    <input type="checkbox" name="languages" value="R" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">Statistik & Data</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">Julia</span>
+                    <input type="checkbox" name="languages" value="Julia" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">Scientific Computing</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">C++</span>
+                    <input type="checkbox" name="languages" value="C++" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">ML Inference Engine</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">TypeScript</span>
+                    <input type="checkbox" name="languages" value="TypeScript" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">AI Web App</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">Golang</span>
+                    <input type="checkbox" name="languages" value="Golang" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">ML API Service</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">Rust</span>
+                    <input type="checkbox" name="languages" value="Rust" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">High-Perf Runtime</span>
+                </label>
+
+                <label class="lang-card">
+                  <div class="lang-card-top">
+                    <span class="lang-name">SQL</span>
+                    <input type="checkbox" name="languages" value="SQL" onchange="clearFieldError('error-lang')">
+                  </div>
+                  <span class="lang-type">Data Engineering</span>
+                </label>
+              </div>
+
+              <p id="error-lang" class="field-error">
+                <i data-lucide="alert-circle" style="width:13px;height:13px;"></i>
+                Pilih minimal 1 bahasa pemrograman.
+              </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i data-lucide="check" style="width:15px;height:15px;"></i>
+                Simpan Pendaftaran
+              </button>
+              <button type="button" onclick="resetFormState()" class="btn btn-secondary">
+                Reset
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+
+        <div class="sidebar-card">
+          <div class="sidebar-title">
+            <i data-lucide="list-ordered" style="width:15px;height:15px;color:#9BA3B4;"></i>
+            Alur Pendaftaran
+          </div>
+          <div class="step-list">
+            <div class="step-item">
+              <span class="step-num">1</span>
+              <span>Isi dan lengkapi seluruh data diri pada formulir.</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">2</span>
+              <span>Konfirmasi persetujuan penyimpanan data.</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">3</span>
+              <span>Terima dan simpan bukti registrasi resmi.</span>
+            </div>
+          </div>
+
+          <div class="ai-stat-grid">
+            <div class="ai-stat">
+              <div class="ai-stat-num">12+</div>
+              <div class="ai-stat-label">Modul AI</div>
+            </div>
+            <div class="ai-stat">
+              <div class="ai-stat-num">6 mo</div>
+              <div class="ai-stat-label">Durasi</div>
+            </div>
+            <div class="ai-stat">
+              <div class="ai-stat-num">94%</div>
+              <div class="ai-stat-label">Penempatan</div>
+            </div>
+            <div class="ai-stat">
+              <div class="ai-stat-num">25</div>
+              <div class="ai-stat-label">Maks. Siswa</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-note">
+          <p style="font-size:13px;font-weight:700;color:#0F1320;margin-bottom:6px;">Kerahasiaan Data Terjamin</p>
+          <p style="font-size:12.5px;color:#6B7385;line-height:1.6;">
+            NIK, nomor kontak, dan alamat domisili Anda hanya digunakan untuk verifikasi penerimaan siswa. Data tidak pernah dibagikan kepada pihak ketiga.
+          </p>
+        </div>
+
+      </aside>
+
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ====================================================
+     FOOTER
+     ==================================================== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-copy">
+      <span class="footer-mono">R/</span>
+      © 2026 RAIHAN Coding Academy · Artificial Intelligence Division
+    </div>
+    <nav class="footer-links">
+      <a href="javascript:void(0)" onclick="switchView('gallery')" class="footer-link">Dokumentasi</a>
+      <a href="javascript:void(0)" onclick="switchView('register')" class="footer-link">Pendaftaran</a>
+      <a href="javascript:void(0)" class="footer-link">Kurikulum AI</a>
+      <a href="javascript:void(0)" class="footer-link">Kontak</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ====================================================
+     DIALOG 1: KONFIRMASI SIMPAN
+     "Apakah Anda sudah yakin untuk menyimpan?"
+     ==================================================== -->
+<div id="confirmModal" class="modal-overlay">
+  <div class="modal-backdrop" onclick="closeModal('confirmModal')"></div>
+  <div class="modal-box dialog-sm">
+
+    <div class="dialog-icon">
+      <i data-lucide="shield-question" style="width:22px;height:22px;"></i>
+    </div>
+
+    <h3 class="dialog-heading">Konfirmasi Penyimpanan Data</h3>
+    <p class="dialog-question">"Apakah Anda sudah yakin untuk menyimpan?"</p>
+    <div class="dialog-note">
+      Pastikan NIK, nama lengkap, nomor handphone, dan pilihan bahasa pemrograman yang Anda isi telah benar sebelum data direkam ke sistem pendaftaran RAIHAN AI Academy.
+    </div>
+
+    <div class="dialog-actions">
+      <button onclick="closeModal('confirmModal')" class="btn btn-secondary" style="padding:9px 18px;font-size:13.5px;">
+        Batal
+      </button>
+      <button onclick="executeConfirmSave()" class="btn btn-primary" style="padding:9px 22px;font-size:13.5px;">
+        <i data-lucide="check" style="width:14px;height:14px;"></i>
+        Ya
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====================================================
+     DIALOG 2: HASIL PENDAFTARAN (isian sesuai form)
+     ==================================================== -->
+<div id="resultModal" class="modal-overlay" style="overflow-y:auto;">
+  <div class="modal-backdrop" onclick="closeModal('resultModal')"></div>
+  <div class="modal-box result-modal" style="margin:auto;">
+
+    <button onclick="closeModal('resultModal')" class="modal-close">
+      <i data-lucide="x" style="width:15px;height:15px;"></i>
+    </button>
+
+    <div class="result-stripe ai"></div>
+
+    <div class="result-header">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+        <div class="result-badge">
+          <i data-lucide="check-circle" style="width:11px;height:11px;"></i>
+          Data Tersimpan
+        </div>
+        <span id="result-reg-id" class="result-id">REG-AI-2026-000000</span>
+      </div>
+      <h3 class="result-title">Bukti Registrasi Calon Siswa</h3>
+      <p class="result-subtitle">RAIHAN Coding Academy — Artificial Intelligence Division</p>
+    </div>
+
+    <div class="result-body">
+
+      <div class="result-grid">
+        <div class="result-field">
+          <span class="result-label">NIK</span>
+          <span id="result-nik" class="result-value mono">—</span>
+        </div>
+        <div class="result-field">
+          <span class="result-label">Nama Lengkap</span>
+          <span id="result-nama" class="result-value">—</span>
+        </div>
+        <div class="result-field">
+          <span class="result-label">Jenis Kelamin</span>
+          <span id="result-gender" class="result-value">—</span>
+        </div>
+        <div class="result-field">
+          <span class="result-label">No. Handphone</span>
+          <span id="result-nohp" class="result-value mono">—</span>
+        </div>
+      </div>
+
+      <div class="result-divider"></div>
+
+      <div class="result-field">
+        <span class="result-label">Alamat Domisili</span>
+        <span id="result-alamat" class="result-value" style="font-weight:400;font-size:13.5px;color:#363C50;white-space:pre-wrap;line-height:1.55;">—</span>
+      </div>
+
+      <div class="result-divider"></div>
+
+      <div class="result-field">
+        <span class="result-label" style="margin-bottom:8px;display:block;">Bahasa Pemrograman yang Diminati</span>
+        <div id="result-languages" class="lang-tags"></div>
+      </div>
+
+    </div>
+
+    <div class="result-footer">
+      <button onclick="window.print()" class="btn btn-secondary" style="padding:9px 16px;font-size:13px;gap:6px;">
+        <i data-lucide="printer" style="width:14px;height:14px;"></i>
+        Cetak Bukti
+      </button>
+      <button onclick="closeModal('resultModal'); resetFormState();" class="btn btn-primary" style="padding:9px 22px;font-size:13px;">
+        Selesai
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====================================================
+     DIALOG 3: DETAIL KEGIATAN GALLERY
+     ==================================================== -->
+<div id="galleryModal" class="modal-overlay">
+  <div class="modal-backdrop" onclick="closeModal('galleryModal')"></div>
+  <div class="modal-box gallery-modal">
+    <button onclick="closeModal('galleryModal')" class="modal-close">
+      <i data-lucide="x" style="width:15px;height:15px;"></i>
+    </button>
+    <div id="gallery-modal-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
